@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ecom-web
+  name: ecom-web
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ecom-web
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ecom-web
+    spec:
+      containers:
+      - image: testyoc/ecom-web:v3
+        name: ecom-web
+        ports:
+        - containerPort: 80
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_HOST
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_NAME
+        - name: FEATURE_DARK_MODE
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: FEATURE_DARK_MODE
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: password
+        - name: MARIADB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: rootpassword
+        resources: {}
+status: {}
