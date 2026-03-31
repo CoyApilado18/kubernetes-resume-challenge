@@ -19,7 +19,7 @@ spec:
         app: ecom-web
     spec:
       containers:
-      - image: testyoc/ecom-web:v3
+      - image: testyoc/ecom-web:v4
         name: ecom-web
         ports:
         - containerPort: 80
