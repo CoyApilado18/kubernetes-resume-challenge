@@ -7,6 +7,7 @@ services:
       MYSQL_DATABASE: ecomdb
       MYSQL_USER: ecomuser
       MYSQL_PASSWORD: ecompassword
+      
     ports:
       - "3306:3306"
     volumes:
@@ -26,6 +27,7 @@ services:
       DB_NAME: ecomdb
       DB_USER: ecomuser
       DB_PASSWORD: ecompassword
+      FEATURE_DARK_MODE: "true" #feature toggle in step 6 of kubernetes resume challenge
     volumes:
       - ./:/var/www/html:Z
 
