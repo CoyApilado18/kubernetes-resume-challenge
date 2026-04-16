@@ -169,7 +169,7 @@ $darkMode = getenv('FEATURE_DARK_MODE') === 'true';
             <div class="slider_inner">
                 <div class="camera_caption">
                     <h2 class="wow fadeInUp animated">Make Your Shopping Easy</h2>
-                    <h5 class="wow fadeIn animated" data-wow-delay="0.3s">THIS IS A DEMO WEBSITE</h5>
+                    <h5 class="wow fadeIn animated" data-wow-delay="0.3s">THIS IS A DEMO WEBSITE VERSION2</h5>
                     <a class="learn_mor wow fadeInU" data-wow-delay="0.6s" href="#product-list">Show Now!</a>
                 </div>
             </div>
