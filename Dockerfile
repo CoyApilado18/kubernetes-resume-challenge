@@ -9,7 +9,14 @@ RUN a2enmod rewrite
 
 # Step 4: Copy application source into Apache doc root
 # Assuming your e-commerce app code is in the same directory as this Dockerfile
-COPY . /var/www/html/
+COPY index.php ./
+COPY healthz.php ./
+COPY readyz.php ./
+COPY css/ ./css/
+COPY js/ ./js/
+COPY img/ ./img/
+COPY fonts/ ./fonts/
+COPY vendors/ ./vendors/
 
 # Step 5: Set working directory
 WORKDIR /var/www/html/

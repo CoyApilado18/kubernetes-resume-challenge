@@ -23,16 +23,16 @@ spec:
         app: ecom-web
     spec:
       containers:
-      - image: testyoc/ecom-web:v7
+      - image: testyoc/ecom-web:v8
         name: ecom-web
         readinessProbe:
           httpGet:
             path: /readyz.php
             port: 80
-          initialDelaySeconds: 5
+          initialDelaySeconds: 10
           periodSeconds: 5
-          timeoutSeconds: 2
-          failureThreshold: 3
+          timeoutSeconds: 5
+          failureThreshold: 6
         livenessProbe:
           httpGet:
             path: /healthz.php

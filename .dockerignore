@@ -1,0 +1,15 @@
+.git
+.gitignore
+.github/
+kubernetes/
+helm-ecom/
+assets/
+scss/
+README.md
+*.bak
+*.yaml
+*.yml
+Dockerfile.php-mysqli
+docker-compose-local.yaml.bak
+.vscode/
+.idea/
