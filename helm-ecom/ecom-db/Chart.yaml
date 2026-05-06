@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ecom-db
+description: Helm chart for MariaDB resources for the e-commerce app
+type: application
+version: 0.1.0
+appVersion: "10.5"

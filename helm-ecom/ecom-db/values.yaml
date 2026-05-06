@@ -1,0 +1,91 @@
+nameOverride: ""
+fullnameOverride: ""
+
+secret:
+  name: db-credentials
+
+auth:
+  database: ecomdb
+  username: ecomuser
+  password: ecompassword
+  rootPassword: rootpass
+
+image:
+  repository: mariadb
+  tag: "10.5"
+  pullPolicy: IfNotPresent
+
+deployment:
+  name: mysql
+  replicas: 1
+
+service:
+  name: mysql-service
+  type: ClusterIP
+  port: 3306
+  targetPort: 3306
+
+persistence:
+  enabled: true
+  pvName: mysql-pv1
+  pvcName: mysql-pvc1
+  storageClassName: manual
+  accessMode: ReadWriteOnce
+  size: 2Gi
+  hostPath: /mnt/data/mysql
+  reclaimPolicy: Retain
+
+probes:
+  startup:
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 60
+  readiness:
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 6
+  liveness:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+init:
+  enabled: true
+  jobName: db-init-job
+  configMapName: db-init-cm
+  backoffLimit: 4
+  activeDeadlineSeconds: 300
+  image:
+    repository: mysql
+    tag: "8.0"
+    pullPolicy: IfNotPresent
+  sql: |
+    CREATE DATABASE IF NOT EXISTS ecomdb;
+    USE ecomdb;
+
+    CREATE TABLE IF NOT EXISTS products (
+      id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+      Name VARCHAR(255) DEFAULT NULL,
+      Price VARCHAR(255) DEFAULT NULL,
+      ImageUrl VARCHAR(255) DEFAULT NULL,
+      PRIMARY KEY (id),
+      UNIQUE KEY uq_products_name_imageurl (Name, ImageUrl)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+    INSERT INTO products (Name, Price, ImageUrl)
+    VALUES
+    ('Laptop', '100', 'c-1.png'),
+    ('Drone', '200', 'c-2.png'),
+    ('VR', '300', 'c-3.png'),
+    ('Tablet', '50', 'c-5.png'),
+    ('Watch', '90', 'c-6.png'),
+    ('Phone Covers', '20', 'c-7.png'),
+    ('Phone', '80', 'c-8.png'),
+    ('Laptop', '150', 'c-4.png')
+    ON DUPLICATE KEY UPDATE
+    Price = VALUES(Price),
+    ImageUrl = VALUES(ImageUrl);
+
+resources: {}

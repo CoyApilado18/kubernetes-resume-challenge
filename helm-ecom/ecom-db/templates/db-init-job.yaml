@@ -1,0 +1,62 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.init.jobName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: db-init
+    {{- include "ecom-db.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: {{ .Values.init.backoffLimit }}
+  activeDeadlineSeconds: {{ .Values.init.activeDeadlineSeconds }}
+  template:
+    metadata:
+      labels:
+        app: db-init
+        {{- include "ecom-db.labels" . | nindent 8 }}
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: db-init
+          image: "{{ .Values.init.image.repository }}:{{ .Values.init.image.tag }}"
+          imagePullPolicy: {{ .Values.init.image.pullPolicy }}
+          command:
+            - sh
+            - -c
+            - |
+              echo "Waiting for MariaDB service to accept connections..."
+              until mysqladmin ping -h"{{ .Values.service.name }}" -u"${DB_USER}" -p"${DB_PASSWORD}" --silent; do
+                sleep 2
+              done
+
+              echo "MariaDB is reachable. Loading db-load-script.sql..."
+              mysql -h"{{ .Values.service.name }}" \
+                -u"${DB_USER}" \
+                -p"${DB_PASSWORD}" \
+                "{{ .Values.auth.database }}" < /scripts/db-load-script.sql
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secret.name }}
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secret.name }}
+                  key: password
+          volumeMounts:
+            - name: db-init-script
+              mountPath: /scripts/db-load-script.sql
+              subPath: db-load-script.sql
+              readOnly: true
+      volumes:
+        - name: db-init-script
+          configMap:
+            name: {{ .Values.init.configMapName }}
+            items:
+              - key: db-load-script.sql
+                path: db-load-script.sql

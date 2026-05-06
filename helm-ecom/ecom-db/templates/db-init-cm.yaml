@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.init.configMapName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "ecom-db.labels" . | nindent 4 }}
+data:
+  db-load-script.sql: |
+{{ .Values.init.sql | indent 4 }}

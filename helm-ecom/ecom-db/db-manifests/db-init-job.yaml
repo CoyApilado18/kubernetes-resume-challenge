@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: db-init-job
-  namespace: dev
+  namespace: helm-test
 spec:
   backoffLimit: 4
   template:
