@@ -5,7 +5,7 @@ on:
 
 jobs:
   test:
-    runs-on: self-hosted
+    runs-on: k8s
     steps:
       - name: Show runner and kubectl info
         run: |
