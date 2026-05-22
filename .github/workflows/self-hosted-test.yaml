@@ -1,0 +1,15 @@
+name: Self-hosted runner test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: self-hosted
+    steps:
+      - name: Show runner and kubectl info
+        run: |
+          echo "Runner hostname: $(hostname)"
+          echo "GithHub workspace : $GITHUB_WORKSPACE"
+          echo "Kube context:"
+          kubectl config current-context || echo "kubectl not installed or no context"
