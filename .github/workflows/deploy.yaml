@@ -7,7 +7,7 @@ on:
   #     - main
         
 env:
-  IMAGE_NAME: ghcr.io/CoyApilado18/ecom-web #* testyoc/ecom-web:v8
+  IMAGE_NAME: ghcr.io/coyapilado18/ecom-web #* testyoc/ecom-web:v8
   HELM_RELEASE: ecom-web
   HELM_CHART_PATH: ./helm
 
@@ -62,6 +62,6 @@ jobs:
       - name: Helm upgrade release
         run: |
           helm upgrade --install ${{ env.HELM_RELEASE }} ${{ env.HELM_CHART_PATH }} \
-            --set image.repository= ghcr.io/CoyApilado18/ecom-web \
+            --set image.repository= ghcr.io/coyapilado18/ecom-web \
             --set image.tag=${{ github.sha }} \
             --namespace default --create-namespace
