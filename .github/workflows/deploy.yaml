@@ -59,15 +59,9 @@ jobs:
         with:
           version: 'latest'
 
-
       - name: Helm upgrade release
         run: |
-          # everything from here
-          ...
-          # to here  
-#      - name: Helm upgrade release
-#        run: |
-#          helm upgrade --install ${ env.HELM_RELEASE }} ${ env.HELM_CHART_PATH }} \
-#            --set image.repository= ghcr.io/coyapilado18/ecom-web \
-#            --set image.tag=${ github.sha }} \
-#            --namespace default --create-namespace
+          helm upgrade --install ${ env.HELM_RELEASE }} ${ env.HELM_CHART_PATH }} \
+            --set image.repository= ${ env.IMAGE_NAME }}\
+            --set image.tag=${ github.sha }} \
+            --namespace default --create-namespace
