@@ -9,7 +9,7 @@ on:
 env:
   IMAGE_NAME: ghcr.io/coyapilado18/ecom-web #* testyoc/ecom-web:v8
   HELM_RELEASE: ecom-web
-  HELM_CHART_PATH: ./helm
+  HELM_CHART_PATH: ./helm/ecom-app
 
 jobs:
   build-and-deploy: # job id
