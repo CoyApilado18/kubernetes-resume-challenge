@@ -62,6 +62,6 @@ jobs:
       - name: Helm upgrade release
         run: |
           helm upgrade --install ${{ env.HELM_RELEASE }} ${{ env.HELM_CHART_PATH }} \
-            --set image.repository= ${{ env.IMAGE_NAME }}\
-            --set image.tag= ${{ github.sha }} \
-            --namespace default --create-namespace
+            --set image.repository=${{ env.IMAGE_NAME }} 
+            --set image.tag=${{ github.sha }} \
+            --set image.pullSecrets[0].name=ghcr-login-secret
