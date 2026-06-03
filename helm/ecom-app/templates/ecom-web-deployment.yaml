@@ -28,10 +28,10 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      #{{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        name: {{ index .Values.image.pullSecrets 0 | quote }} 
-         {{- toYaml . | nindent 8 }}
+        {{- range .Values.image.pullSecrets }} 
+        - name: {{ . | quote }}
       {{- end }}
       serviceAccountName: {{ include "ecom-app.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
@@ -44,8 +44,8 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-#          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+#          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
