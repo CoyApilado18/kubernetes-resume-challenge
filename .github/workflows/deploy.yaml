@@ -62,6 +62,7 @@ jobs:
       - name: Helm upgrade release
         run: |
           helm upgrade --install ${{ env.HELM_RELEASE }} ${{ env.HELM_CHART_PATH }} \
+            --namespace gha-helm --create-namespace \
             --set image.repository=${{ env.IMAGE_NAME }} \
             --set image.tag=${{ github.sha }} 
             
