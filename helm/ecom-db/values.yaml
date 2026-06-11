@@ -27,8 +27,8 @@ service:
 
 persistence:
   enabled: true
-  pvName: mysql-pv1
-  pvcName: mysql-pvc1
+  pvName: mysql-pv2
+  pvcName: mysql-pvc2
   storageClassName: manual
   accessMode: ReadWriteOnce
   size: 2Gi

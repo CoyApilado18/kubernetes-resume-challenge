@@ -43,6 +43,11 @@ service:
   type: LoadBalancer
   port: 80
 
+appConfig:
+  DB_HOST: "mysql-service.gha-helm.svc.cluster.local"           # or whatever service name/host you use
+  DB_NAME: "ecomdb"
+  FEATURE_DARK_MODE: "false"
+
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: false

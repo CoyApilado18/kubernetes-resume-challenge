@@ -1,0 +1,5 @@
+# app-config values.yaml
+appConfig:
+  DB_HOST: "mysql-service.gha-helm.svc.cluster.local"           # or whatever service name/host you use
+  DB_NAME: "ecomdb"
+  FEATURE_DARK_MODE: "false"
